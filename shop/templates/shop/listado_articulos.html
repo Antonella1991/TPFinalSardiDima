@@ -1,0 +1,53 @@
+{% extends "shop/base.html" %}
+
+{% block contenido %}
+<section>
+    <div>
+        <h1>Lista de articulos </h1>
+        <a href="{% url 'crear-articulo' %}">Crear Articulo</a>
+        <br><br>
+        <form action="{% url 'buscar-articulo' %}" method="post">
+      {% csrf_token %}
+      <input type="text" name="busqueda">
+      <input type="submit" value="Buscar por nombre">
+    </form>
+    <br>
+
+            <table class="table">
+                <tbody>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Modelo</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                  {% for articulo in articulos %}
+                  <tr>
+                    <td>{{ articulo.id }}</td>
+                    <td>{{ articulo.nombre }}</td>
+                    <td>{{ articulo.modelo }}</td>
+                    <td>
+                      {% if user == articulo.creador %}
+                      <form action="{% url 'editar-articulo' articulo.id %}"
+                        {% csrf_token %}
+                        <input type="submit" value="editar"/>
+                        </form
+                        {% endif %}
+                    </td>
+                    <td>
+                      {% if user == articulo.creador %}
+                      <form action="{% url 'eliminar-articulo' articulo.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" value="eliminar"/>
+                      </form
+                      {% endif %}
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+    </div>
+</section>
+{% endblock contenido %}
