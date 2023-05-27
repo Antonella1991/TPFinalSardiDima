@@ -20,12 +20,13 @@ class Cliente(models.Model):
     
   
 class Articulo(models.Model):
-  nombre = models.CharField(max_length=256)
-  modelo = models.CharField(max_length=256)
-  codigo = models.IntegerField(default=False)
-  disponible = models.BooleanField(default=False)
+  titulo = models.CharField(max_length=256)
+  subtitulo = models.CharField(max_length=256)
+  cuerpo = models.CharField(default=True, max_length=256)
+  autor = models.CharField(max_length=256)
+  fecha = models.DateTimeField()
   creador = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)  
   
   def __str__(self):
-    return f"{self.nombre} | {self.modelo}"
+    return f"{self.titulo} | {self.subtitulo} | {self.autor}"
 # Create your models here.

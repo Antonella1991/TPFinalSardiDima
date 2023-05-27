@@ -28,10 +28,12 @@ def crear_articulo(request):
 
         if formulario.is_valid():
             data = formulario.cleaned_data  # es un diccionario
-            nombre = data["nombre"]
-            modelo = data["modelo"]
+            titulo = data["titulo"]
+            subtitulo = data["subtitulo"]
+            autor = data[autor]
+            fecha = data["fecha"]
             creador = request.user
-            articulo = Articulo(nombre=nombre, modelo=modelo, creador=creador)  # lo crean solo en RAM
+            articulo = Articulo(titulo=titulo, subtitulo=subtitulo, autor=autor, fehca=fecha, creador=creador)  # lo crean solo en RAM
             articulo.save()  # Lo guardan en la Base de datos
 
             # Redirecciono al usuario a la lista de cursos
@@ -51,7 +53,7 @@ def buscar_articulo(request):
     if request.method == "POST":
         data = request.POST
         busqueda = data["busqueda"]
-        articulo = Articulo.objects.filter(nombre__contains=busqueda)
+        articulo = Articulo.objects.filter(titulo_contains=busqueda)
         contexto = {
             "articulo": articulo,
         }
@@ -78,16 +80,20 @@ def editar_articulo(request, id):
 
         if formulario.is_valid():
             data = formulario.cleaned_data
-            articulo.nombre = data['nombre']
-            articulo.modelo = data['modelo']
+            articulo.titulo = data['titulo']
+            articulo.subtitulo = data['subtitulo']
+            articulo.autor = data['autor']
+            articulo.fecha = data['fecha']
             articulo.save()
 
             url_exitosa = reverse('listar-articulos')
             return redirect(url_exitosa)
     else:  # GET
         inicial = {
-            'nombre': articulo.nombre,
-            'modelo': articulo.modelo,
+            'titulo': articulo.titulo,
+            'subtitulo': articulo.subtitulo,
+            'autor': articulo.autor,
+            'fecha': articulo.fecha,
         }
         formulario = ArticuloFormulario(initial=inicial)
     return render(
@@ -95,6 +101,13 @@ def editar_articulo(request, id):
         template_name='shop/articulo_formulario.html',
         context={'formulario': formulario},
     )
-    
+
+class ClienteListView(LoginRequiredMixin, ListView):
+     model = Cliente
+     template_name = 'shop/listado_clientes.html'
+     
+class ClienteDetailView(LoginRequiredMixin, DetailView):
+    model = Cliente
+    success_url = reverse_lazy ('ver-clientes')
     
 # Create your views here.
