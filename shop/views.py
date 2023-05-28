@@ -29,15 +29,14 @@ def crear_articulo(request):
         if formulario.is_valid():
             data = formulario.cleaned_data  # es un diccionario
             titulo = data["titulo"]
-            genero = data["genero"]
             autor = data["autor"]
             fecha = data["fecha"]
             creador = request.user
-            articulo = Articulo(titulo=titulo, genero=genero, autor=autor, fecha=fecha, creador=creador)  # lo crean solo en RAM
+            articulo = Articulo(titulo=titulo, autor=autor, fecha=fecha, creador=creador)  # lo crean solo en RAM
             articulo.save()  # Lo guardan en la Base de datos
 
             # Redirecciono al usuario a la lista de cursos
-            url_exitosa = reverse('listar-articulo')
+            url_exitosa = reverse('listar-articulos')
             return redirect(url_exitosa)
     else:  # GET
         formulario = ArticuloFormulario()
@@ -70,7 +69,7 @@ def eliminar_articulo(request, id):
     articulo = Articulo.objects.get(id=id)
     if request.method == "POST":
         articulo.delete()
-        url_exitosa = reverse('listar-articulo')
+        url_exitosa = reverse('listar-articulos')
         return redirect(url_exitosa)
 
 def editar_articulo(request, id):
@@ -81,18 +80,16 @@ def editar_articulo(request, id):
         if formulario.is_valid():
             data = formulario.cleaned_data
             articulo.titulo = data['titulo']
-            articulo.genero = data['genero']
             articulo.autor = data['autor']
             articulo.cuerpo = data['cuerpo']
             articulo.fecha = data['fecha']
             articulo.save()
 
-            url_exitosa = reverse('listar-articulo')
+            url_exitosa = reverse('listar-articulos')
             return redirect(url_exitosa)
     else:  # GET
         inicial = {
             'titulo': articulo.titulo,
-            'genero': articulo.genero,
             'autor': articulo.autor,
             'cuerpo': articulo.cuerpo,
             'fecha': articulo.fecha,

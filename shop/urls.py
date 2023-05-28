@@ -7,7 +7,7 @@ urlpatterns = [
     
     path("", inicio, name="inicio"),
     path('despedida/', despedida),
-    path('pages/', listar_articulos, name="listar-articulo"),
+    path('pages/', listar_articulos, name="listar-articulos"),
     path('crear-articulos/', crear_articulo, name='crear-articulo'),
     path('buscar-articulos/', buscar_articulo, name='buscar-articulo'),
     path("eliminar-articulo/<int:id>/", eliminar_articulo, name="eliminar-articulo"),
