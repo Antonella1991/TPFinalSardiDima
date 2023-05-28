@@ -1,5 +1,5 @@
 """
-URL configuration for mysite project.
+URL configuration for sistema_coder project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -15,16 +15,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 
-from django.conf import settings
-from django.conf.urls.static import static
+from accounts.views import signup, login_view, CustomLogoutView, MiPerfilUpdateView, agregar_avatar
+
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('home/', include('shop.urls')),
-    path('account/', include('accounts.urls')),    
+    # URLS Usuario y sesion
+    path('signup/', signup, name="signup"),
+    path('login/', login_view, name="login"),
+    path('logout/', CustomLogoutView.as_view(), name="logout"),
+    path('editar-mi-perfil/', MiPerfilUpdateView.as_view(), name="editar_perfil"),
+    path('editar-mi-perfil/', MiPerfilUpdateView.as_view(), name="editar_perfil"),
+    path('agregar-avatar/', agregar_avatar, name="agregar_avatar"),
+
 
 ]
-
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

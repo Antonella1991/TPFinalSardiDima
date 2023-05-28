@@ -11,7 +11,7 @@ from django.http import HttpResponse
 
 def listar_articulos(request):
     contexto = {
-        "articulo": Articulo.objects.all(),
+        "articulos": Articulo.objects.all(),
     }
     http_response = render(
         request=request,
@@ -20,7 +20,7 @@ def listar_articulos(request):
     )
     return http_response
 
-
+@login_required
 def crear_articulo(request):
     if request.method == "POST":
         formulario = ArticuloFormulario(request.POST)
@@ -64,7 +64,7 @@ def buscar_articulo(request):
         )
     return http_response
 
-
+@login_required
 def eliminar_articulo(request, id):
     articulo = Articulo.objects.get(id=id)
     if request.method == "POST":
@@ -72,6 +72,7 @@ def eliminar_articulo(request, id):
         url_exitosa = reverse('listar-articulos')
         return redirect(url_exitosa)
 
+@login_required
 def editar_articulo(request, id):
     articulo = Articulo.objects.get(id=id)
     if request.method == "POST":

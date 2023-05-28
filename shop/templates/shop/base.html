@@ -27,8 +27,30 @@
                 <a class="navbar-brand" href="{% url 'presentacion' %}">About us</a>
                 <a class="navbar-brand" href="{% url 'ver-clientes' %}">Clientes</a>
                 <a class="navbar-brand" href="{% url 'listar-articulos' %}">Articulos</a>   
-                
-                
+                {% if user.is_authenticated %}
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <div style="display: inline-flex;">
+                            <span>{{ user.username }}</span>
+                        </div>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a class="dropdown-item" href="{% url 'editar_perfil' %}">Editar mis datos</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'agregar_avatar' %}">Agregar avatar</a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{% url 'logout' %}"><strong>Cerrar Sesión</strong></a>
+                        </li>
+                    </ul>
+                    </div>
+                </div>                {% else %}
+                <a class="btn btn-success" href="{% url 'login' %}">Inicio sesión</a>
+                <a class="btn btn-info" href="{% url 'signup' %}">Registro</a>
+                {% endif %}           
+            </div>
         </nav>
 
         <section style="padding:4rem 3rem;">
