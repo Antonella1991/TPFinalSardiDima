@@ -32,7 +32,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('titulo', models.CharField(max_length=256)),
-                ('subtitulo', models.CharField(max_length=256)),
+                ('genero', models.CharField(max_length=256)),
                 ('autor', models.CharField(max_length=256)),
                 ('fecha', models.DateTimeField(default=True)),
                 ('creador', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to=settings.AUTH_USER_MODEL)),
